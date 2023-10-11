@@ -30,7 +30,7 @@ class Car{
     }
     public void startCar(){
         if (isCarStart){
-            out.println("Car is Running");
+            out.println("Car is Running"+carColor);
         }else {
             out.println("Car is not operational");
         }
