@@ -8,15 +8,17 @@ class Car{
     UUID carId;
     String brandName;
     String modelName;
+    String carType;
     String carColor;
     String gearType;
     int yearMade;
     boolean isCarStart;
     String price;
-    public Car(String brandName, String modelName, String carColor,String gearType,int yearMade,boolean isCarStart,String price){
+    public Car(String brandName, String modelName,String carType, String carColor,String gearType,int yearMade,boolean isCarStart,String price){
         this.carId = UUID.randomUUID();
         this.brandName = brandName;
         this.modelName = modelName;
+        this.carType = carType;
         this.carColor = carColor;
         this.gearType = gearType;
         this.yearMade = yearMade;
@@ -30,7 +32,7 @@ class Car{
     }
     public void startCar(){
         if (isCarStart){
-            out.println("Car is Running"+carColor);
+            out.println("Car is Running");
         }else {
             out.println("Car is not operational");
         }
@@ -121,6 +123,8 @@ class AlarmClock{
         this.clockColor = clockColor;
         this.timeDisplay = timeDisplay;
         this.hasSnoozeButton = hasSnoozeButton;
+        this.sound = sound;
+        this.snoozeDuration = snoozeDuration;
         out.println("Instance of class Alarm clock created with Unique Id "+alarmClockId);
     }
     public void boughtAlarmClock(){ out.println("Bought an alarm clock from "+brand+" the model name is "+model+" its color is "+clockColor); }
@@ -161,6 +165,7 @@ class Book{
         this.yearOfPublication = yearOfPublication;
         this.pageCount = pageCount;
         this.chapterCount = chapterCount;
+        this.fontStyle = fontStyle;
         out.println("Instance of class Book created with Unique Id "+bookId);
     }
     public void buyingBook(){ out.println("I purchased a book authored by "+author+" called "+title+". It falls into the genre of "+genre+" and was priced at "+price+". \n It is has "+chapterCount+" and has over "+pageCount+" it was published in the year "+yearOfPublication);}
@@ -182,13 +187,19 @@ class Person{
     String gender;
     String number;
     String email;
-    float height;
+    double height;
     float weight;
-    public Person(String name, String email,String number){
+    String ethnicity;
+    public Person(String name, String email,String number, int age, String gender, double height, float weight, String ethnicity){
         this.uniqueId = UUID.randomUUID();
         this.name = name;
         this.number=number;
         this.email = email;
+        this.age = age;
+        this.gender = gender;
+        this.height = height;
+        this.weight = weight;
+        this.ethnicity = ethnicity;
         out.println("Instance of Person class created with Unique id " +uniqueId); //Printing a statement along with a Unique Id in constructor to indicate creation of Person instance
     }
     public void introduce(){
@@ -198,9 +209,10 @@ class Person{
         out.println("My mobile number is  " +number);
     }
     public void sendMail(){ out.println("He send a mail to this email address "+email ); }
+    public void description(){ out.println("His is a  "+ ethnicity +" "+gender+" he was about "+height+" tall and he must weigh least "+weight+" pounds and his must be between "+age);}
 
     //Created a Nested class Address within Person Class
-    class Address{
+    static class Address{
         UUID addressId;
         int houseNumber;
         String streetName;
@@ -224,21 +236,23 @@ class Backpack{
     String type;
     String bagColor;
     int numCompartments;
+    int noOfZippers;
     boolean hasLaptopPocket;
     boolean isWaterResistant;
     String capacity;
-    public Backpack(String brand, String type, String bagColor, int numCompartments, boolean hasLaptopPocket, boolean isWaterResistant, String capacity){
+    public Backpack(String brand, String type, String bagColor, int numCompartments, int noOfZippers ,boolean hasLaptopPocket, boolean isWaterResistant, String capacity){
         this.backpackId = UUID.randomUUID();
         this.brand = brand;
         this.type = type;
         this.bagColor = bagColor;
         this.numCompartments =numCompartments;
+        this.noOfZippers = noOfZippers;
         this.hasLaptopPocket = hasLaptopPocket;
         this.isWaterResistant = isWaterResistant;
         this.capacity = capacity;
         out.println("Instance of class Backpack created with Unique Id "+backpackId);
     }
-    public void foundBag(){ out.println("I found a "+bagColor+" color" +type+" backpack made by "+brand); }
+    public void foundBag(){ out.println("I found a "+bagColor+" color" +type+" backpack made by "+brand+" and has "+noOfZippers+" zippers"); }
     public void waterResistant(){
         if(isWaterResistant){
             out.println("Backpack is water resistant");
@@ -337,7 +351,7 @@ public class Exercise0 {
     public static void main(String[] args) {
 
         //-----Object Creation for the classes-----
-        Car car1 = new Car("Koenigsegg ","Gemera","Carbon Green","nine-speed automatic gearbox",2023,true,"3.7 million");
+        Car car1 = new Car("Koenigsegg ","Gemera","Hyper Car","Carbon Green","nine-speed automatic gearbox",2023,true,"3.7 million");
         Car.Engine engine1 = car1.new Engine("2.0 L TFG twin-turbocharged I3 5.0 L twin-turbocharged V8","2,300 Horse power");
         Car.Wheel wheel1 = car1.new Wheel("21 x 10.5 up front and 22 x 11.5 at Back", "Forged Aluminium","Carbon-black");
         car1.testDrive();
@@ -346,7 +360,7 @@ public class Exercise0 {
         engine1.engineDetails();
         wheel1.wheelDetails();
 
-        Car car2 = new Car("Pagani","Utopia","Shiny black","XTRAC 7-speed Transversal AMT",2020,true,"3.1 million");
+        Car car2 = new Car("Pagani","Utopia","Hyper Car","Shiny black","XTRAC 7-speed Transversal AMT",2020,true,"3.1 million");
         Car.Engine engine2 = car2.new Engine("V12 5890 CC Twin Turbo Chargers","815 horse power");
         Car.Wheel wheel2 = car2.new Wheel("265/35ZR21 at the front and 325/30ZR22 at the back", "Durable Cast Aluminum","Off White");
         car2.testDrive();
@@ -355,7 +369,7 @@ public class Exercise0 {
         engine2.engineDetails();
         wheel2.wheelDetails();
 
-        Car car3 = new Car("Bugatti ","Chiron","Black with Blue Stripe","7-speed dual-clutch automatic",2023,false,"3 million");
+        Car car3 = new Car("Bugatti ","Chiron","Hyper car","Black with Blue Stripe","7-speed dual-clutch automatic",2023,false,"3 million");
         Car.Engine engine3 = car3.new Engine("8.0 L (488 cu in) quad-turbocharged WR16","1,479 Horse Power");
         Car.Wheel wheel3 = car3.new Wheel("7.6 m", "Forged Aluminium Alloy","Mat-black");
         car3.testDrive();
@@ -409,38 +423,41 @@ public class Exercise0 {
         book3.readingBook();
         book3.bookCover();
 
-        Person person1 = new Person("Navin", "navin@gmail.com","1234567890");
-        Person.Address address1 = person1.new Address(2347,"North Loop", "San Jose","California");
+        Person person1 = new Person("Navin", "navin@gmail.com","1234567890",33,"male",6.3,60,"Indian");
+        Person.Address address1 = new Person.Address(2347, "North Loop", "San Jose", "California");
         person1.introduce();
-        person1.sharedNumber();;
+        person1.sharedNumber();
         person1.sendMail();
+        person1.description();
         address1.getAddressInfo();
 
-        Person person2 = new Person("Daran","daran@gmail.com","234567189");
-        Person.Address address2 = person2.new Address(3421,"South Loop","San Francisco","California");
+        Person person2 = new Person("Daran","daran@gmail.com","234567189",36,"male",5.9,72,"Middle eastern");
+        Person.Address address2 = new Person.Address(3421, "South Loop", "San Francisco", "California");
         person2.introduce();
-        person2.sharedNumber();;
+        person2.sharedNumber();
         person2.sendMail();
+        person2.description();
         address2.getAddressInfo();
 
-        Person person3 = new Person("Danny","danny@gmail.com","6543216789");
-        Person.Address address3 = person3.new Address(1245,"East Loop","Santa Clara","California");
+        Person person3 = new Person("Danny","danny@gmail.com","6543216789",21,"male",5.8,78,"African-American");
+        Person.Address address3 = new Person.Address(1245, "East Loop", "Santa Clara", "California");
         person3.introduce();
-        person3.sharedNumber();;
+        person3.sharedNumber();
         person3.sendMail();
+        person3.description();
         address3.getAddressInfo();
 
-        Backpack bag1 = new Backpack("Wild craft","Laptop-bag","Dark Blue",3,true,true,"25 Liters");
+        Backpack bag1 = new Backpack("Wild craft","Laptop-bag","Dark Blue",3, 5,true,true,"25 Liters");
         bag1.foundBag();
         bag1.waterResistant();
         bag1.fillCapacity();
 
-        Backpack bag2 = new Backpack("Adidas","Rucksack","Dark Green",2,false,true,"35 Liters");
+        Backpack bag2 = new Backpack("Adidas","Rucksack","Dark Green",2, 4,false,true,"35 Liters");
         bag2.foundBag();
         bag2.waterResistant();
         bag2.fillCapacity();
 
-        Backpack bag3 = new Backpack("North Face","Functional Backpack","Brown",4,false,true,"55 Liters");
+        Backpack bag3 = new Backpack("North Face","Functional Backpack","Brown",4,3,false,true,"55 Liters");
         bag3.foundBag();
         bag3.waterResistant();
         bag3.fillCapacity();
