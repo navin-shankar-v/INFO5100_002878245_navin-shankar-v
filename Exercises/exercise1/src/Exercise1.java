@@ -2,156 +2,124 @@ import java.util.*;
 
 import static java.lang.System.out;
 
-abstract class Student {
+class Student {
+    private final String studentName;
+    private final String studentType;
+    private List<Integer> quizScores = new ArrayList<>();
 
-    String stdName;
-    String stdType;
-    List<Integer> quizScore;
-
-    public Student(String stdName, String stdType, List<Integer> quizScore) {
-        this.stdName = stdName;
-        this.stdType = stdType;
-        this.quizScore = quizScore;
+    public Student(String studentName, String studentType, List<Integer> quizScores) {
+        this.studentName = studentName;
+        this.studentType = studentType;
+        this.quizScores = quizScores;
     }
 
-
-    public void addQuizScore(int score) {
-        quizScore.add(score);
+    public String getStudentName() {
+        return studentName;
     }
 
-    public String getStdName() {
-        return stdName;
+    public String getStudentType() {
+        return studentType;
     }
 
-    public List<Integer> getQuizScore() {
-        return quizScore;
+    public List<Integer> getQuizScores() {
+        return quizScores;
     }
 
-    public void calculateAverageScore(){
+    public void calculateAverageScore() {
         int totalScore = 0;
-        for (Integer score : quizScore) {
+        for (Integer score : quizScores) {
             totalScore += score;
         }
-        double averageScore = (double) totalScore / quizScore.size(); //Total score is cast to double
-        out.println(stdName +"  "+stdType+"  : Average Quiz Score = " + averageScore+"\n");
+        double averageScore = (double) totalScore / quizScores.size(); //Total score is cast to double
 
-    }
-
-}
-
-class partTimeStudent extends Student{
-    public partTimeStudent(String stdName, String stdType, List<Integer> quizScore) {
-        super(stdName, stdType, quizScore);
+        out.println(studentName +"  "+studentType+"  : Average Quiz Score = " + averageScore+"\n");
     }
 }
 
-
-class FullTimeStudents extends Student{
-    double quizMark1;
-    double quizMark2;
-    public FullTimeStudents(String stdName, String stdType, List<Integer> quizScore,int quizMark1, int quizMark2){
-        super(stdName, stdType, quizScore);
-        this.quizMark1 = quizMark1;
-        this.quizMark2 = quizMark2;
-        addQuizScore(quizMark1);
-        addQuizScore(quizMark2);
-    }
-
-    public void studentDetails(){
-        out.println("Student Name "+stdName+":\n Quiz score 1: "+quizMark1+"\n Quiz score 2: "+quizMark2);
+class PartTimeStudent extends Student {
+    public PartTimeStudent(String studentName, List<Integer> quizScores) {
+        super(studentName, "Part Time Student", quizScores);
     }
 }
 
-class Session{
-    List<Student> stds;
-    public Session(){
-        stds = new LinkedList<>();
+class FullTimeStudent extends Student {
+    public FullTimeStudent(String studentName, List<Integer> quizScores) {
+        super(studentName, "Full Time Student", quizScores);
     }
-    public void addStudents(Student student){
-        stds.add(student);
+}
+
+class Session {
+    private final List<Student> students = new ArrayList<>();
+
+    public void addStudent(Student student) {
+        students.add(student);
     }
 
-    public void printStudentList() { //To print students in a Session part time and full time
-        System.out.println("Student List in a Session:");
-        for (Student student : stds) {
-            System.out.println(student.getStdName()+" "+student.stdType+"\n");
-        }
-    }
-    public void calAndPrintAverageScore(){
-        for(Student student : stds){
-            student.calculateAverageScore(); //Called the method from abstract class student
+    public void printStudentList() {
+        out.println("Student List in a Session: \n");
+        for (Student student : students) {
+            out.println(student.getStudentName() + " " + student.getStudentType() + "\n");
         }
     }
 
-    public void printScoresAscending(){
-        List<Integer> allQuizScores = new LinkedList<>();
-        for (Student student : stds) {
-            allQuizScores.addAll(student.quizScore);
-            Collections.sort(allQuizScores);
+    public void printQuizScores() {
+        System.out.println("Quiz Scores of Each Student: \n");
+        for (Student student : students) {
+            System.out.println(student.getStudentName() + " " + student.getStudentType() + ": " + student.getQuizScores()+"\n");
         }
-        out.println("Quiz scores in Ascending Order "+allQuizScores+"\n");
     }
 
-    public void fullTimeStudentMark(){
-        out.println("Marks of Full time Students");
-        List<String> studentName = new LinkedList<>();
-        for (Student student : stds) {
-            if (student instanceof FullTimeStudents) {
-                FullTimeStudents fullTimeStudent = (FullTimeStudents) student; // Cast to FullTimeStudents
-                System.out.println(fullTimeStudent.getStdName() + " " + fullTimeStudent.stdType + " " + fullTimeStudent.getQuizScore()+" \n");
-            }
+    public void calculateAndPrintAverageScores() {
+        out.println("Average Quiz Scores of Student : \n");
+        for (Student student : students) {
+            student.calculateAverageScore();
+        }
+    }
+
+    public void printScoresAscending() {
+        for (Student student : students) {
+            List<Integer> quizScores = student.getQuizScores();
+            Collections.sort(quizScores); // Sort the quiz scores in ascending order
+            System.out.println(student.getStudentName() + " " + student.getStudentType() + ": Quiz Scores in Ascending Order " + quizScores + "\n");
         }
     }
 
     public void printPartTimeStudentNames() {
-        System.out.println("Part-Time Students:");
-        for (Student student : stds) {
-            if (student instanceof partTimeStudent) {
-                System.out.println(student.getStdName() + " " + student.stdType+"\n");
+        out.println("Part-Time Students:");
+        for (Student student : students) {
+            if (student.getStudentType().equals("Part Time Student")) {
+                out.println(student.getStudentName() + " " + student.getStudentType() + "\n");
             }
         }
     }
-
 }
 
-public class exercise1 {
+public class Exercise1 {
     public static void main(String[] args) {
-
         List<String> randomNames = Arrays.asList("Alice", "Bob", "Charlie", "David", "Eva", "Frank", "Grace", "Hannah", "Ivan", "Julia", "Kevin", "Linda", "Michael", "Nina", "Oliver", "Pamela", "Quincy", "Rachel", "Samuel", "Tina");
         Session session = new Session();
 
         Random random = new Random();
 
-
-        for (int i = 1; i <= 20; i++)
-        {
-            List<Integer> quizScores = new LinkedList<>();
+        for (int i = 1; i <= 20; i++) {
+            List<Integer> quizScores = new ArrayList<>();
             for (int j = 0; j < 15; j++) {
-                quizScores.add((int) (Math.random() * 100));
+                quizScores.add(random.nextInt(101));
             }
+            String randomName = randomNames.get(random.nextInt(randomNames.size()));
+            Student student;
             if (i % 2 == 0) {
-                String randomName = randomNames.get(random.nextInt(randomNames.size()));
-
-                FullTimeStudents fullTimeStudent = new FullTimeStudents(randomName + i, "Full time", quizScores, (int) (Math.random() * 100), (int) (Math.random() * 100));
-
-                session.addStudents(fullTimeStudent);
+                student = new FullTimeStudent(randomName + i, quizScores);
             } else {
-                String randomName = randomNames.get(random.nextInt(randomNames.size()));
-
-                partTimeStudent partTimeStudent = new partTimeStudent(randomName + i,"Part Time", quizScores);
-                session.addStudents(partTimeStudent);
+                student = new PartTimeStudent(randomName + i, quizScores);
             }
+            session.addStudent(student);
         }
 
         session.printStudentList();
-        session.fullTimeStudentMark();
-        session.calAndPrintAverageScore();
+        session.printQuizScores();
+        session.calculateAndPrintAverageScores();
         session.printScoresAscending();
-
-
         session.printPartTimeStudentNames();
     }
 }
-
-
-
