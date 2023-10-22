@@ -96,7 +96,7 @@ class Session {
 
 public class Exercise1 {
     public static void main(String[] args) {
-        List<String> randomNames = Arrays.asList("Alice", "Bob", "Charlie", "David", "Eva", "Frank", "Grace", "Hannah", "Ivan", "Julia", "Kevin", "Linda", "Michael", "Nina", "Oliver", "Pamela", "Quincy", "Rachel", "Samuel", "Tina");
+        List<String> randomNames = Arrays.asList("Navin", "Shruthi", "Sudharshana", "Vasuki", "Mithun", "Prem", "Sanjay", "Rithick", "Vijay", "Leo", "Harold", "Anotny", "Parthi", "Siddarth", "Trisha", "Lokesh", "Elisa", "Ratna", "Anirudh", "Vikram");
         Session session = new Session();
 
         Random random = new Random();
